@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting System</title>
+    <style>
+    body {
+        background-color: rgb(101, 77, 240);
+        
+    font-size: 16px;
+    line-height: 1.6;
+    font-family: 'Montserrat', sans-serif;
+
+}
+
+
+.allbutton{
+    background-color: #10b981;
+    color: #fff;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 10px;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+
+}
+#voteButton {
+    background-color: #10b981;
+    color: #fff;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 10px;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#main-content {
+    background-color: rgba(0, 0, 0, 0.4);  /* Slight overlay for better readability */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+       
+}
+
+
+.picture {
+    width: 18%;
+    height: 150px;
+    margin: 0 5px;
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+.allbutton:hover {
+    transform: scale(1.05);
+}
+
+.picture:hover {
+    transform: scale(1.05);
+}
+
+.position {
+    margin-top: 30px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.picture-space {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    flex-wrap: wrap;  /* Allows the images to wrap to the next line if they overflow */
+}
+
+
+
+.picture img {
+    width: 100%;  /* Ensures the image fills the entire width of the container */
+    height: auto;  /* Maintains the aspect ratio of the image */
+    object-fit: cover;  /* Ensures the image fills the div while maintaining its aspect ratio */
+}
+
+.tick {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgb(245, 236, 236);
+    font-size: 24px;
+}
+@media (max-width: 768px) {
+    .picture {
+        width: 20%;  /* Images take up more space on smaller screens */
+    }
+}
+.picture.selected {
+    border: 2px solid blue; /* Optional: add border to highlight selected candidate */
+}
+table {
+        
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        h7,h8,h9,h10,h11,h12{
+            display:none;
+        }
+        th, td {
+            padding: 8px 12px;
+            text-align: center;
+            border:1px solid #65dde1;
+           
+        }
+        th {
+            background-color: #65dde1;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: left;
+        }
+        .form-section, .form-fields, .results-section { 
+            display: none;
+            align-items: left;
+            
+        }
+        
+        button { margin: 5px 0; }
+        .hidden { display: none; } /* Class to hide unselected pictures */
+
+        input, select, textarea {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    display: flex;
+
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="background-pattern">
+        <div class="circle"></div>
+        <div class="square"></div>
+    </div>
+    <div class="main-content">
+
+    <h2>Voting System</h2>
+    <h13>@odhiambojoash</h13>
+    <div id="mainButtons">
+        <button id="voterButton" class="allbutton">Voter</button>
+        <button id="candidateButton" class="allbutton">Candidate</button>
+    </div>
+
+    <!-- Voter Options -->
+    <div id="voterSection" class="form-section">
+    <button id="registerButton" class="allbutton">Register</button>
+    <button id="loginButton" class="allbutton">Login</button>
+
+        <!-- Registration Form -->
+        <div id="registerForm" class="form-fields">
+            <h3>Voter Registration</h3>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" placeholder="Enter First Name">
+            <label for="secondName">Second Name:</label>
+            <input type="text" id="secondName" placeholder="Enter Second Name">
+            <label for="idNumber">ID Number:</label>
+            <input type="text" id="idNumber" placeholder="Enter ID Number">
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumber" placeholder="Enter Phone Number">
+            <label for="voterNumber">Voter Number:</label>
+            <input type="text" id="voterNumber" placeholder="Enter Voter Number">
+            <button id="submit" class="allbutton">Register</button>
+        </div>
+
+        <!-- Login Form -->
+        <div id="loginForm" class="form-fields">
+            <h3>Voter Login</h3>
+            <label for="loginName">Name:</label>
+            <input type="text" id="loginName" placeholder="Enter Your Name">
+            <label for="loginIdNumber">ID Number:</label>
+            <input type="text" id="loginIdNumber" placeholder="Enter ID Number">
+            <label for="loginVoterNumber">Voter Number:</label>
+            <input type="text" id="loginVoterNumber" placeholder="Enter Voter Number">
+            <button id="votersubmit" class="allbutton">Login</button>
+        </div>
+    </div>
+
+    <!-- Candidate Options -->
+    <div id="candidateSection" class="form-section">
+        <button id="candidateRegisterButton"  class="allbutton" >Register</button>
+        <button id="candidateLoginButton" class="allbutton">Login</button>
+
+        <!-- Candidate Registration Form -->
+        <div id="candidateRegisterForm" class="form-fields">
+            <h3>Candidate Registration</h3>
+            <label for="candidateFirstName">First Name:</label>
+            <input type="text" id="candidateFirstName" placeholder="Enter First Name">
+            <label for="candidateSecondName">Second Name:</label>
+            <input type="text" id="candidateSecondName" placeholder="Enter Second Name">
+            <label for="candidateIdNumber">ID Number:</label>
+            <input type="text" id="candidateIdNumber" placeholder="Enter ID Number">
+            <label for="candidateNumber">Candidate Number:</label>
+            <input type="text" id="candidateNumber" placeholder="Enter Candidate Number">
+            <label for="candidateVoterNumber">Voter Number:</label>
+            <input type="text" id="candidateVoterNumber" placeholder="Enter Voter Number">
+            <label for="candidatePhoneNumber">Phone Number:</label>
+            <input type="text" id="candidatePhoneNumber" placeholder="Enter Phone Number">
+            <label for="candidateCounty">County:</label>
+            <input type="text" id="candidateCounty" placeholder="Enter County">
+            <label for="candidateConstituency">Constituency:</label>
+            <input type="text" id="candidateConstituency" placeholder="Enter Constituency">
+            <label for="candidateSeatPosition">Seat Position:</label>
+            <input type="text" id="candidateSeatPosition" placeholder="Enter Seat Position">
+            <button id="registersubmit" class="allbutton">Register </button>
+        </div>
+
+        <!-- Candidate Login Form -->
+        <div id="candidateLoginForm" class="form-fields">
+            <h3>Candidate Login</h3>
+            <label for="candidateLoginName">Name:</label>
+            <input type="text" id="candidateLoginName" placeholder="Enter Your Name">
+            <label for="candidateLoginIdNumber">ID Number:</label>
+            <input type="text" id="candidateLoginIdNumber" placeholder="Enter ID Number">
+            <label for="candidateLoginVoterNumber">Voter Number:</label>
+            <input type="text" id="candidateLoginVoterNumber" placeholder="Enter Voter Number">
+            <button id="loginsubmit"class="allbutton">Login</button>
+        </div>
+    </div>
+
+    <div id="resultsSection" class="results-section">
+        <h1>President</h1>
+        <div class="picture-space" id="presidentPictures">
+            <div class="picture" onclick="selectPicture('president','candidate 1')">
+                <img src="person1.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('president','candidate 2')">
+                <img src="person2.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('president','candidate 3')">
+                <img src="person3.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('president','candidate 4')" >
+                <img src="person4.jpg" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('president','candidate 5')">
+                <img src="person5.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+        </div>
+
+        <h2 class="position">Governor</h2>
+        <div class="picture-space" id="governorPictures">
+            <div class="picture" onclick="selectPicture('governor','candidate 1')">
+                <img src="person1.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('governor','candidate 2')">
+                <img src="person2.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('governor','candidate 3')">
+                <img src="person3.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('governor','candidate 4')">
+                <img src="person4.jpg" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('governor','candidate 5')">
+                <img src="person5.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+        </div>
+
+        <h2 class="position">Senator</h2>
+        <div class="picture-space" id="senatorPictures">
+            <div class="picture" onclick="selectPicture('senator','candidate 1')">
+                <img src="person1.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('senator','candidate 2')">
+                <img src="person2.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('senator','candidate 3')">
+                <img src="person3.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('senator','candidate 4')">
+                <img src="person4.jpg" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('senator','candidate 5')">
+                <img src="person5.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+        </div>
+
+        <h2 class="position">Women Representative</h2>
+        <div class="picture-space" id="womenPictures">
+            <div class="picture" onclick="selectPicture('women','candidate 1')">
+                <img src="person1.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('women','candidate 2')">
+                <img src="person2.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('women','candidate 3')">
+                <img src="person3.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('women','candidate 4')">
+                <img src="person4.jpg" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('women','candidate 5')">
+                <img src="person5.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+        </div>
+
+        <h2 class="position">Member of Parliament</h2>
+        <div class="picture-space" id="mpPictures">
+            <div class="picture" onclick="selectPicture('mp','candidate 1')">
+                <img src="person1.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('mp','candidate 2')">
+                <img src="person2.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('mp','candidate 3')">
+                <img src="person3.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('mp','candidate 4')">
+                <img src="person4.jpg" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('mp','candidate 5')">
+                <img src="person5.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+        </div>
+
+        <h2 class="position">Member of County Assembly (MCA)</h2>
+        <div class="picture-space" id="mcaPictures">
+            <div class="picture" onclick="selectPicture('mca','candidate 1')">
+                <img src="person1.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('mca','candidate 2')">
+                <img src="person2.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('mca','candidate 3')">
+                <img src="person3.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('mca','candidate 4')">
+                <img src="person4.jpg" alt="">
+                <div class="tick">✔</div>
+            </div>
+            <div class="picture" onclick="selectPicture('mca','candidate 5')">
+                <img src="person5.avif" alt="">
+                <div class="tick">✔</div>
+            </div>
+        </div>
+
+        <!-- Vote Button -->
+        <button id="voteButton">Submit Vote</button>
+    </div >
+    <div id="table">
+    
+     <table id="presidentTable" class="vote-table hidden">
+        
+        <thead>
+            <h7>President Results</h7>
+            <tr>
+                <th>Position</th>
+                <th>Candidate</th>
+                <th>Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>President</td>
+                <td>Candidate 1</td>
+                <td id="president-1-votes">0</td>
+            </tr>
+            <tr>
+                <td>President</td>
+                <td>Candidate 2</td>
+                <td id="president-2-votes">0</td>
+            </tr>
+            <tr>
+                <td>President</td>
+                <td>Candidate 3</td>
+                <td id="president-3-votes">0</td>
+            </tr>
+            <tr>
+                <td>President</td>
+                <td>Candidate 4</td>
+                <td id="president-4-votes">0</td>
+            </tr>
+            <tr>
+                <td>President</td>
+                <td>Candidate 5</td>
+                <td id="president-5-votes">0</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table id="governorTable" class="vote-table hidden">
+        
+        <thead>
+            <h8>Governor Results</h8>
+            <tr>
+                <th>Position</th>
+                <th>Candidate</th>
+                <th>Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Governor</td>
+                <td>Candidate 1</td>
+                <td id="governor-1-votes">0</td>
+            </tr>
+            <tr>
+                <td>Governor</td>
+                <td>Candidate 2</td>
+                <td id="governor-2-votes">0</td>
+            </tr>
+            <tr>
+                <td>Governor</td>
+                <td>Candidate 3</td>
+                <td id="governor-3-votes">0</td>
+            </tr>
+            <tr>
+                <td>Governor</td>
+                <td>Candidate 4</td>
+                <td id="governor-4-votes">0</td>
+            </tr>
+            <tr>
+                <td>Governor</td>
+                <td>Candidate 5</td>
+                <td id="governor-5-votes">0</td>
+            </tr>
+        </tbody>
+    </table>
+    <table id="senatorTable" class="vote-table hidden">
+        
+        <thead>
+            <h9>Senator Results</h9>
+            <tr>
+                <th>Position</th>
+                <th>Candidate</th>
+                <th>Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>senator</td>
+                <td>Candidate 1</td>
+                <td id="senator-1-votes">0</td>
+            </tr>
+            <tr>
+                <td>senator</td>
+                <td>Candidate 2</td>
+                <td id="senator-2-votes">0</td>
+            </tr>
+            <tr>
+                <td>senator</td>
+                <td>Candidate 3</td>
+                <td id="senator-3-votes">0</td>
+            </tr>
+            <tr>
+                <td>senator</td>
+                <td>Candidate 4</td>
+                <td id="senator-4-votes">0</td>
+            </tr>
+            <tr>
+                <td>senator</td>
+                <td>Candidate 5</td>
+                <td id="senator-5-votes">0</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <table id="womenTable" class="vote-table hidden">
+        
+        <thead>
+            <h10>Women Rep Results</h10>
+            <tr>
+                <th>Position</th>
+                <th>Candidate</th>
+                <th>Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>women rep</td>
+                <td>Candidate 1</td>
+                <td id="women-1-votes">0</td>
+            </tr>
+            <tr>
+                <td>women rep</td>
+                <td>Candidate 2</td>
+                <td id="women-2-votes">0</td>
+            </tr>
+            <tr>
+                <td>women rep</td>
+                <td>Candidate 3</td>
+                <td id="women-3-votes">0</td>
+            </tr>
+            <tr>
+                <td>women rep</td>
+                <td>Candidate 4</td>
+                <td id="women-4-votes">0</td>
+            </tr>
+            <tr>
+                <td>women rep</td>
+                <td>Candidate 5</td>
+                <td id="women-5-votes">0</td>
+            </tr>
+        </tbody>
+    </table>
+    <table id="member of parliamentTable" class="vote-table hidden">
+        
+        <thead>
+            <h11>Mp Results</h11>
+            <tr>
+                <th>Position</th>
+                <th>Candidate</th>
+                <th>Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>member of parliament</td>
+                <td>Candidate 1</td>
+                <td id="mp-1-votes">0</td>
+            </tr>
+            <tr>
+                <td>member of parliament</td>
+                <td>Candidate 2</td>
+                <td id="mp-2-votes">0</td>
+            </tr>
+            <tr>
+                <td>member of parliament</td>
+                <td>Candidate 3</td>
+                <td id="mp-3-votes">0</td>
+            </tr>
+            <tr>
+                <td>member of parliament</td>
+                <td>Candidate 4</td>
+                <td id="mp-4-votes">0</td>
+            </tr>
+            <tr>
+                <td>member of parliament</td>
+                <td>Candidate 5</td>
+                <td id="mp-5-votes">0</td>
+            </tr>
+        </tbody>
+    </table>
+    <table id="MCATable" class="vote-table hidden">
+        
+        <thead>
+            <h12>Mca Results</h12>
+            <tr>
+                <th>Position</th>
+                <th>Candidate</th>
+                <th>Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>MCA</td>
+                <td>Candidate 1</td>
+                <td id="mca-1-votes">0</td>
+            </tr>
+            <tr>
+                <td>MCA</td>
+                <td>Candidate 2</td>
+                <td id="mca-2-votes">0</td>
+            </tr>
+            <tr>
+                
+                <td>MCA</td>
+                <td>Candidate 3</td>
+                <td id="mca-3-votes">0</td>
+            </tr>
+            <tr>
+                <td>MCA</td>
+                <td>Candidate 4</td>
+                <td id="mca-4-votes">0</td>
+            </tr>
+            <tr>
+                <td>MCA</td>
+                <td>Candidate 5</td>
+                <td id="mca-5-votes">0</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    </div>
+</div>
+
+    <script>
+        const mainButtons=document.getElementById('mainButtons');
+        const voterButton=document.getElementById('voterButton');
+        const candidateButton=document.getElementById('candidateButton');
+        const registerButton=document.getElementById('registerButton');
+        const loginButton=document.getElementById('loginButton');
+        const submit=document.getElementById('submit');
+        const candidateRegisterButton=document.getElementById('candidateRegisterButton');
+        const candidateLoginButton=document.getElementById('candidateLoginButton');
+        const votersubmit=document.getElementById('votersubmit');
+        const registersubmit=document.getElementById('registersubmit');
+        const loginsubmit=document.getElementById('loginsubmit');
+        const voteButton=document.getElementById('voteButton');
+        
+        
+        const voterSection=document.getElementById('voterSection');
+        const registerForm=document.getElementById('registerForm');
+        const loginForm=document.getElementById('loginForm');
+        const candidateSection=document.getElementById('candidateSection');
+        const candidateRegisterForm=document.getElementById('candidateRegisterForm');
+        const candidateLoginForm=document.getElementById('candidateLoginForm');
+        const resultsSection=document.getElementById('resultsSection');
+        const presidentTable=document.getElementById('presidentTable');
+
+        voterButton.addEventListener('click',function(){
+            voterSection.style.display='block';
+            mainButtons.style.display='none';
+
+        });
+        candidateButton.addEventListener('click',function(){
+            candidateSection.style.display='block';
+            mainButtons.style.display='none';
+
+        });
+        registerButton.addEventListener('click',function(){
+            registerForm.style.display='block';
+            registerButton.style.display='none';
+            loginButton.style.display='block';
+            loginForm.style.display='none';
+            
+        });
+        loginButton.addEventListener('click',function(){
+            loginForm.style.display='block';
+            loginButton.style.display='none';
+            registerForm.style.display='none';
+            registerButton.style.display='block';
+        });
+        candidateRegisterButton.addEventListener('click',function(){
+            candidateRegisterForm.style.display='block';
+            candidateRegisterButton.style.display='none';
+            candidateLoginButton.style.display='block';
+            candidateLoginForm.style.display='none';
+            
+        });
+        candidateLoginButton.addEventListener('click',function(){
+            candidateLoginForm.style.display='block';
+            candidateLoginButton.style.display='none';
+            candidateRegisterForm.style.display='none';
+            candidateRegisterButton.style.display='block';});
+
+
+        submit.addEventListener('click',function(){
+            resultsSection.style.display='block';
+            voterSection.style.display='none';
+            candidateSection.style.display='none';
+
+            });
+        votersubmit.addEventListener('click',function(){
+            resultsSection.style.display='block';
+            voterSection.style.display='none';
+            candidateSection.style.display='none';
+
+            });
+        
+        registersubmit.addEventListener('click',function(){
+            resultsSection.style.display='block';
+            voterSection.style.display='none';
+            candidateSection.style.display='none';
+
+            });
+        loginsubmit.addEventListener('click',function(){
+            resultsSection.style.display='block';
+            voterSection.style.display='none';
+            candidateSection.style.display='none';
+
+
+            });
+        voteButton.addEventListener('click',function(){
+            resultsSection.style.display='none';
+            
+            });
+            // Object to track the selected candidate for each position
+            const selectedCandidates = {
+    president: null,
+    governor: null,
+    senator: null,
+    women: null,
+    mp: null,
+    mca: null
+};
+
+// Object to store the current vote count for each candidate for each position
+const voteCounts = {
+    president: [0, 0, 0, 0, 0], // Index corresponds to candidate 1, 2, 3, 4, 5 for each position
+    governor: [0, 0, 0, 0, 0],
+    senator: [0, 0, 0, 0, 0],
+    women: [0, 0, 0, 0, 0],
+    mp: [0, 0, 0, 0, 0],
+    mca: [0, 0, 0, 0, 0]
+};
+
+function selectPicture(position, candidateNumber) {
+    // Check if the same candidate is clicked again
+    if (selectedCandidates[position] === candidateNumber) {
+        return; // If the same candidate is clicked again, do nothing
+    }
+
+    // Deselect the previously selected candidate (if any)
+    if (selectedCandidates[position] !== null) {
+        const prevSelected = selectedCandidates[position];
+        // Decrease the vote of the previously selected candidate
+        voteCounts[position][prevSelected - 1]--;
+        // Update the vote count displayed for the previous candidate
+        updateVoteDisplay(position, prevSelected);
+    }
+
+    // Select the new candidate
+    selectedCandidates[position] = candidateNumber;
+    // Increase the vote for the new candidate
+    voteCounts[position][candidateNumber - 1]++;
+    // Update the vote count displayed for the new selected candidate
+    updateVoteDisplay(position, candidateNumber);
+
+    // Update the tick marks
+    updateTick(position, candidateNumber);
+
+    // Disable other candidates for the current position (optional)
+    disableOtherCandidates(position, candidateNumber);
+}
+
+function updateVoteDisplay(position, candidateNumber) {
+    const voteId = `${position}-${candidateNumber}-votes`;
+    const voteElement = document.getElementById(voteId);
+    if (voteElement) {
+        voteElement.textContent = voteCounts[position][candidateNumber - 1]; // Update the vote display
+    }
+}
+
+function updateTick(position, candidateNumber) {
+    const tick = document.querySelector(`#${position}Pictures .picture:nth-child(${candidateNumber}) .tick`);
+    if (tick) {
+        tick.style.display = 'block'; // Show tick for the newly selected candidate
+    }
+    
+    // Hide the tick for all other candidates
+    const allTicks = document.querySelectorAll(`#${position}Pictures .tick`);
+    allTicks.forEach(t => {
+        if (t.style.display !== 'block') {
+            t.style.display = 'none';
+        }
+    });
+}
+
+function disableOtherCandidates(position, selectedIndex) {
+    const allPictures = document.querySelectorAll(`#${position}Pictures .picture`);
+    allPictures.forEach((picture, index) => {
+        if (index + 1 !== selectedIndex) {
+            picture.style.pointerEvents = 'none'; // Disable clicking on other candidates
+        }
+    });
+}
+
+// Reset the voting (if you need a reset function)
+function resetVoting() {
+    for (let position in selectedCandidates) {
+        selectedCandidates[position] = null;
+        const ticks = document.querySelectorAll(`#${position}Pictures .tick`);
+        ticks.forEach(tick => tick.style.display = 'none');
+        const pictures = document.querySelectorAll(`#${position}Pictures .picture`);
+        pictures.forEach(picture => picture.style.pointerEvents = 'auto'); // Enable all pictures again
+    }
+
+    // Reset vote counts to 0 for all candidates
+    for (let position in voteCounts) {
+        voteCounts[position] = [0, 0, 0, 0, 0];
+        // Reset displayed votes to 0
+        for (let i = 1; i <= 5; i++) {
+            const voteId = `${position}-${i}-votes`;
+            const voteElement = document.getElementById(voteId);
+            if (voteElement) {
+                voteElement.textContent = '0';
+            }
+        }
+    }
+}
+const votes = {
+    president: [0, 0, 0, 0, 0],
+    governor: [0, 0, 0, 0, 0],
+    senator: [0, 0, 0, 0, 0],
+    women: [0, 0, 0, 0, 0],
+    mp: [0, 0, 0, 0, 0],
+    mca: [0, 0, 0, 0, 0]
+};
+
+// Function to handle selecting a candidate and updating the vote counts
+function selectPicture(position, candidate) {
+    const positionVotes = votes[position];
+    const candidateIndex = parseInt(candidate.split(' ')[1]) - 1;  // Candidate 1 => index 0
+
+    // Increase the vote for the selected candidate
+    positionVotes[candidateIndex]++;
+
+    // Update the vote count in the corresponding table
+    const voteCell = document.getElementById(`${position}-${candidateIndex + 1}-votes`);
+    voteCell.textContent = positionVotes[candidateIndex];
+
+    // Optionally, add a visual checkmark or highlight the selected picture
+    const pictureDivs = document.querySelectorAll(`#${position}Pictures .picture`);
+    pictureDivs.forEach((div, index) => {
+        const tickDiv = div.querySelector('.tick');
+        if (index === candidateIndex) {
+            tickDiv.style.display = 'block'; // Show the checkmark for the selected candidate
+        } else {
+            tickDiv.style.display = 'none';  // Hide checkmark for other candidates
+        }
+    });
+}
+
+// Function to handle the vote submission
+document.getElementById('voteButton').addEventListener('click', function() {
+    // Show the tables with vote counts after submission
+    document.querySelectorAll('.vote-table').forEach(table => {
+        table.classList.remove('hidden');
+    });
+
+    // Optionally, disable the voting section after submission to prevent multiple submissions
+    document.querySelectorAll('.picture').forEach(picture => {
+        picture.style.pointerEvents = 'none';
+    });
+
+    // Hide the "Submit Vote" button to prevent further submissions
+    this.style.display = 'none';
+});
+
+
+
+
+    </script>
+
+</body>
+</html>
