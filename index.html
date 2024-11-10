@@ -13,6 +13,22 @@
     font-family: 'Montserrat', sans-serif;
 
 }
+        /* For Mobile Phones */
+@media (max-width: 768px) {
+    .picture-space {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns on medium screens */
+    }
+
+    .picture {
+        padding: 10px;
+    }
+}
+
+/* For Small Mobile Phones */
+@media (max-width: 480px) {
+    .picture-space {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on very small screens */
+    }
 
 
 .allbutton{
